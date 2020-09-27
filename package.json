@@ -32,6 +32,8 @@
     ]
   },
   "devDependencies": {
+    "aws-amplify": "^3.3.2",
+    "aws-amplify-react": "^4.2.6",
     "aws-amplify-serverless-plugin": "^1.4.1",
     "serverless-s3-sync": "^1.14.4"
   }
