@@ -146,7 +146,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/psrproj/beta/1601221578246-2020-09-27T15:46:18.246Z/psrproj.zip"
+          "S3Key": "serverless/psrproj/beta/1601227563222-2020-09-27T17:26:03.222Z/psrproj.zip"
         },
         "FunctionName": "psrproj-beta-hello",
         "Handler": "handlers/handler.hello",
@@ -164,14 +164,14 @@
         "HelloLogGroup"
       ]
     },
-    "HelloLambdaVersiont3cvD7YOC1TcfIWz11reQ4sNmbav23MSmBQli9E68": {
+    "HelloLambdaVersion8B13VfkF3nm9UIsWSsc8h765T60hd1FsuNV7pl9mZc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "E34f/pahobJrOO4XLz0cMwP9KjE9d/a4dK3Rz025zJw="
+        "CodeSha256": "Zwr2Q8DhgrQtroLSB+pxtu9ejOkG+iCouJjlHUUyhk8="
       }
     },
     "ApiGatewayRestApi": {
@@ -289,7 +289,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1601221537292": {
+    "ApiGatewayDeployment1601227518159": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -451,6 +451,13 @@
                       ]
                     ]
                   }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:*"
+                  ],
+                  "Resource": "arn:aws:s3:::psr-user-file-bucket-011899/private/cognito-identity.amazonaws.com:sub/*"
                 }
               ]
             }
@@ -529,6 +536,37 @@
         }
       }
     },
+    "UserFileBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketName": "psr-user-file-bucket-011899",
+        "CorsConfiguration": {
+          "CorsRules": [
+            {
+              "AllowedOrigins": [
+                "*"
+              ],
+              "AllowedHeaders": [
+                "*"
+              ],
+              "AllowedMethods": [
+                "GET",
+                "PUT",
+                "POST",
+                "DELETE",
+                "HEAD"
+              ],
+              "ExposedHeaders": [
+                "x-amz-server-side-encryption",
+                "x-amz-request-id",
+                "x-amz-id-2"
+              ],
+              "MaxAge": 3000
+            }
+          ]
+        }
+      }
+    },
     "ReactAppBucket": {
       "Type": "AWS::S3::Bucket",
       "Properties": {
@@ -560,32 +598,6 @@
           ]
         }
       }
-    },
-    "UserFileBucket": {
-      "Type": "AWS::S3::Bucket",
-      "Properties": {
-        "BucketName": "psr-user-file-bucket-011899",
-        "CorsConfiguration": {
-          "CorsRules": [
-            {
-              "AllowedOrigins": [
-                "*"
-              ],
-              "AllowedHeaders": [
-                "*"
-              ],
-              "AllowedMethods": [
-                "GET",
-                "PUT",
-                "POST",
-                "DELETE",
-                "HEAD"
-              ],
-              "MaxAge": 3000
-            }
-          ]
-        }
-      }
     }
   },
   "Outputs": {
@@ -597,7 +609,7 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersiont3cvD7YOC1TcfIWz11reQ4sNmbav23MSmBQli9E68"
+        "Ref": "HelloLambdaVersion8B13VfkF3nm9UIsWSsc8h765T60hd1FsuNV7pl9mZc"
       }
     },
     "ServiceEndpoint": {

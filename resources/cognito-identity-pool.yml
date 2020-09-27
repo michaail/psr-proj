@@ -4,7 +4,7 @@ Resources:
     Type: AWS::Cognito::IdentityPool
     Properties:
       # Generate a name based on the stage
-      IdentityPoolName: beta${self:service}IdPool
+      IdentityPoolName: beta${{self:service}}IdPool
       # Allow unathenticated users
       # AllowUnauthenticatedIdentities: true
       AllowUnauthenticatedIdentities: false
@@ -64,7 +64,10 @@ Resources:
                       - ${self:custom.stage}
                       - '/*'   # allow any http method (GET/POST/...)
                       - '/*'   # actually all paths
-
+              - Effect: 'Allow'
+                Action:
+                  - "s3:*"
+                Resource: "arn:aws:s3:::${{self:custom.FileUploadBucketName}}/private/${cognito-identity.amazonaws.com:sub}/*"
   # IAM role used for unauthenticated users (authenticated users can also invoke unprotected end point)
   CognitoUnauthRole:
     Type: AWS::IAM::Role
@@ -95,7 +98,16 @@ Resources:
                   - 'cognito-sync:*'
                   - 'cognito-identity:*'
                 Resource: '*'
-
+        # - PolicyName: ${self:service}-${self:provider.stage}-${self:provider.region}-S3CognitoAuthPolicy
+        #   PolicyDocument:
+        #     Version: '2012-10-17'
+        #     Statement:
+        #       - Effect: 'Allow'
+        #         Action:
+        #           - 's3:GetObject'
+        #           - 's3:PutObject'
+        #         Resource:
+        #           - !Join [ '', [ !GetAtt S3ImageBucket.Arn, '/*' ]
               # Allow users to invoke our API
               # - Effect: 'Allow'
               #   Action:

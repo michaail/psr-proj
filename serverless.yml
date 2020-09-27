@@ -6,14 +6,14 @@ plugins:
 
 custom:
   stage: beta
-  bucketName: psr-user-file-bucket-011899
+  FileUploadBucketName: psr-user-file-bucket-011899
+  ReactAppBucketName: psr-proj-react-0118999
   amplify:
     - filename: src/aws-exports.js
       type: javascript
       appClient: CognitoUserPoolClient
-      s3bucket: psr-user-file-bucket-011899
   s3Sync:
-    - bucketName: psr-proj-react-0118999
+    - bucketName: ${{self:custom.ReactAppBucketName}}
       localDir: build/
 
 package:
@@ -28,6 +28,7 @@ provider:
   runtime: nodejs12.x
   stage: beta
   region: eu-west-1
+  variableSyntax: "\\${{([\\s\\S]+?)}}"
 
 functions:
   hello:
@@ -40,7 +41,7 @@ functions:
           authorizer: aws_iam
 
 resources:
-  - ${file(resources/cognito-user-pool.yml)}
-  - ${file(resources/cognito-identity-pool.yml)}
-  - ${file(resources/s3-bucket-react.yml)}
-  - ${file(resources/s3-bucket-userfile.yml)}
+  - ${{file(resources/cognito-user-pool.yml)}}
+  - ${{file(resources/cognito-identity-pool.yml)}}
+  - ${{file(resources/s3-bucket-userfile.yml)}}
+  - ${{file(resources/s3-bucket-react.yml)}}
