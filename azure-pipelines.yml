@@ -30,7 +30,7 @@ steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: 'nom run build'
+    script: 'npm run build'
   displayName: 'build react app'
 
 - task: Bash@3
