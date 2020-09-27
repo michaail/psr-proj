@@ -37,7 +37,6 @@ functions:
           method: any
           cors: true
           authorizer: aws_iam
-          cors: true
 
 resources:
   - ${file(resources/cognito-user-pool.yml)}
