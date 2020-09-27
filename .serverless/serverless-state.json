@@ -159,7 +159,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601220449690-2020-09-27T15:27:29.690Z/psrproj.zip"
+                "S3Key": "serverless/psrproj/beta/1601221578246-2020-09-27T15:46:18.246Z/psrproj.zip"
               },
               "FunctionName": "psrproj-beta-hello",
               "Handler": "handlers/handler.hello",
@@ -177,14 +177,14 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersionBE6rveD4mTnC1QMhuTahYvXsp7ZDUHGEeT5bEOeFts": {
+          "HelloLambdaVersiont3cvD7YOC1TcfIWz11reQ4sNmbav23MSmBQli9E68": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "X4uxbLhnrhRcyed4b/ZKO6q4HlCdxiS2TNGvi4tuRkY="
+              "CodeSha256": "E34f/pahobJrOO4XLz0cMwP9KjE9d/a4dK3Rz025zJw="
             }
           },
           "ApiGatewayRestApi": {
@@ -302,7 +302,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1601220412100": {
+          "ApiGatewayDeployment1601221537292": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -577,7 +577,7 @@
           "UserFileBucket": {
             "Type": "AWS::S3::Bucket",
             "Properties": {
-              "BucketName": "psr-user-file-bucket-0118999",
+              "BucketName": "psr-user-file-bucket-011899",
               "CorsConfiguration": {
                 "CorsRules": [
                   {
@@ -610,7 +610,7 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionBE6rveD4mTnC1QMhuTahYvXsp7ZDUHGEeT5bEOeFts"
+              "Ref": "HelloLambdaVersiont3cvD7YOC1TcfIWz11reQ4sNmbav23MSmBQli9E68"
             }
           },
           "ServiceEndpoint": {
@@ -714,13 +714,13 @@
     },
     "custom": {
       "stage": "beta",
-      "bucketName": "psr-proj-react-0118999",
+      "bucketName": "psr-user-file-bucket-011899",
       "amplify": [
         {
           "filename": "src/aws-exports.js",
           "type": "javascript",
           "appClient": "CognitoUserPoolClient",
-          "s3Bucket": "psr-user-file-bucket-0118999"
+          "s3bucket": "psr-user-file-bucket-011899"
         }
       ],
       "s3Sync": [
@@ -777,7 +777,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionBE6rveD4mTnC1QMhuTahYvXsp7ZDUHGEeT5bEOeFts"
+        "versionLogicalId": "HelloLambdaVersiont3cvD7YOC1TcfIWz11reQ4sNmbav23MSmBQli9E68"
       }
     },
     "resources": {
@@ -1007,7 +1007,7 @@
         "UserFileBucket": {
           "Type": "AWS::S3::Bucket",
           "Properties": {
-            "BucketName": "psr-user-file-bucket-0118999",
+            "BucketName": "psr-user-file-bucket-011899",
             "CorsConfiguration": {
               "CorsRules": [
                 {
@@ -1058,7 +1058,7 @@
           "node_modules/**"
         ],
         "artifact": "/Users/michalklos/Projects/psr/psr-proj/.serverless/psrproj.zip",
-        "artifactDirectoryName": "serverless/psrproj/beta/1601220449690-2020-09-27T15:27:29.690Z"
+        "artifactDirectoryName": "serverless/psrproj/beta/1601221578246-2020-09-27T15:46:18.246Z"
       },
       "provider": {
         "name": "aws",
@@ -1309,7 +1309,7 @@
             "UserFileBucket": {
               "Type": "AWS::S3::Bucket",
               "Properties": {
-                "BucketName": "psr-user-file-bucket-0118999",
+                "BucketName": "psr-user-file-bucket-011899",
                 "CorsConfiguration": {
                   "CorsRules": [
                     {
@@ -1347,7 +1347,7 @@
     "artifact": "/Users/michalklos/Projects/psr/psr-proj/.serverless/psrproj.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/psrproj/beta/1601220449690-2020-09-27T15:27:29.690Z",
+    "artifactDirectoryName": "serverless/psrproj/beta/1601221578246-2020-09-27T15:46:18.246Z",
     "artifact": "psrproj.zip"
   }
 }

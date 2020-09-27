@@ -2,7 +2,7 @@ Resources:
   UserFileBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: psr-user-file-bucket-0118999
+      BucketName: psr-user-file-bucket-011899
       # Set the CORS policy
       CorsConfiguration:
         CorsRules:

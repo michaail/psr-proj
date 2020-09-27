@@ -11,7 +11,7 @@ custom:
     - filename: src/aws-exports.js
       type: javascript
       appClient: CognitoUserPoolClient
-      s3Bucket: psr-user-file-bucket-0118999
+      s3bucket: psr-user-file-bucket-011899
   s3Sync:
     - bucketName: psr-proj-react-0118999
       localDir: build/
