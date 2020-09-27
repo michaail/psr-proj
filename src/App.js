@@ -1,7 +1,7 @@
 import React from 'react';
 import Amplify, { API } from 'aws-amplify';
 import awsconfig from './aws-exports';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { withAuthenticator, AmplifySignOut, AmplifyS3ImagePicker } from '@aws-amplify/ui-react';
 
 Amplify.configure(awsconfig);
 
@@ -18,6 +18,7 @@ const App = () => {
     <AmplifySignOut />
     My app
     <button onClick={get}>GET</button>
+    <AmplifyS3ImagePicker />
   </div>
 )}
 

@@ -159,7 +159,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601208398214-2020-09-27T12:06:38.214Z/psrproj.zip"
+                "S3Key": "serverless/psrproj/beta/1601220449690-2020-09-27T15:27:29.690Z/psrproj.zip"
               },
               "FunctionName": "psrproj-beta-hello",
               "Handler": "handlers/handler.hello",
@@ -177,14 +177,14 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersion64HSANZhRZSuSYZJ8omX8fQURGDWJX2WsWwHnUFV5k": {
+          "HelloLambdaVersionBE6rveD4mTnC1QMhuTahYvXsp7ZDUHGEeT5bEOeFts": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "G+K9AXzIaEERgtNIQhWrLZlpXj+OBLtX3e5gYI3WHb8="
+              "CodeSha256": "X4uxbLhnrhRcyed4b/ZKO6q4HlCdxiS2TNGvi4tuRkY="
             }
           },
           "ApiGatewayRestApi": {
@@ -302,7 +302,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1601208364021": {
+          "ApiGatewayDeployment1601220412100": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -573,6 +573,32 @@
                 ]
               }
             }
+          },
+          "UserFileBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketName": "psr-user-file-bucket-0118999",
+              "CorsConfiguration": {
+                "CorsRules": [
+                  {
+                    "AllowedOrigins": [
+                      "*"
+                    ],
+                    "AllowedHeaders": [
+                      "*"
+                    ],
+                    "AllowedMethods": [
+                      "GET",
+                      "PUT",
+                      "POST",
+                      "DELETE",
+                      "HEAD"
+                    ],
+                    "MaxAge": 3000
+                  }
+                ]
+              }
+            }
           }
         },
         "Outputs": {
@@ -584,7 +610,7 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersion64HSANZhRZSuSYZJ8omX8fQURGDWJX2WsWwHnUFV5k"
+              "Ref": "HelloLambdaVersionBE6rveD4mTnC1QMhuTahYvXsp7ZDUHGEeT5bEOeFts"
             }
           },
           "ServiceEndpoint": {
@@ -608,6 +634,11 @@
                   "/beta"
                 ]
               ]
+            }
+          },
+          "UserFileBucketName": {
+            "Value": {
+              "Ref": "UserFileBucket"
             }
           }
         }
@@ -688,7 +719,8 @@
         {
           "filename": "src/aws-exports.js",
           "type": "javascript",
-          "appClient": "CognitoUserPoolClient"
+          "appClient": "CognitoUserPoolClient",
+          "s3Bucket": "psr-user-file-bucket-0118999"
         }
       ],
       "s3Sync": [
@@ -745,7 +777,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersion64HSANZhRZSuSYZJ8omX8fQURGDWJX2WsWwHnUFV5k"
+        "versionLogicalId": "HelloLambdaVersionBE6rveD4mTnC1QMhuTahYvXsp7ZDUHGEeT5bEOeFts"
       }
     },
     "resources": {
@@ -971,9 +1003,41 @@
               ]
             }
           }
+        },
+        "UserFileBucket": {
+          "Type": "AWS::S3::Bucket",
+          "Properties": {
+            "BucketName": "psr-user-file-bucket-0118999",
+            "CorsConfiguration": {
+              "CorsRules": [
+                {
+                  "AllowedOrigins": [
+                    "*"
+                  ],
+                  "AllowedHeaders": [
+                    "*"
+                  ],
+                  "AllowedMethods": [
+                    "GET",
+                    "PUT",
+                    "POST",
+                    "DELETE",
+                    "HEAD"
+                  ],
+                  "MaxAge": 3000
+                }
+              ]
+            }
+          }
         }
       },
-      "Outputs": {}
+      "Outputs": {
+        "UserFileBucketName": {
+          "Value": {
+            "Ref": "UserFileBucket"
+          }
+        }
+      }
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yml",
@@ -994,7 +1058,7 @@
           "node_modules/**"
         ],
         "artifact": "/Users/michalklos/Projects/psr/psr-proj/.serverless/psrproj.zip",
-        "artifactDirectoryName": "serverless/psrproj/beta/1601208398214-2020-09-27T12:06:38.214Z"
+        "artifactDirectoryName": "serverless/psrproj/beta/1601220449690-2020-09-27T15:27:29.690Z"
       },
       "provider": {
         "name": "aws",
@@ -1239,6 +1303,43 @@
               }
             }
           }
+        },
+        {
+          "Resources": {
+            "UserFileBucket": {
+              "Type": "AWS::S3::Bucket",
+              "Properties": {
+                "BucketName": "psr-user-file-bucket-0118999",
+                "CorsConfiguration": {
+                  "CorsRules": [
+                    {
+                      "AllowedOrigins": [
+                        "*"
+                      ],
+                      "AllowedHeaders": [
+                        "*"
+                      ],
+                      "AllowedMethods": [
+                        "GET",
+                        "PUT",
+                        "POST",
+                        "DELETE",
+                        "HEAD"
+                      ],
+                      "MaxAge": 3000
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "Outputs": {
+            "UserFileBucketName": {
+              "Value": {
+                "Ref": "UserFileBucket"
+              }
+            }
+          }
         }
       ]
     },
@@ -1246,7 +1347,7 @@
     "artifact": "/Users/michalklos/Projects/psr/psr-proj/.serverless/psrproj.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/psrproj/beta/1601208398214-2020-09-27T12:06:38.214Z",
+    "artifactDirectoryName": "serverless/psrproj/beta/1601220449690-2020-09-27T15:27:29.690Z",
     "artifact": "psrproj.zip"
   }
 }

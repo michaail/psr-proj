@@ -2,7 +2,7 @@ Resources:
   ReactAppBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: ${self:custom.bucketName}
+      BucketName: psr-proj-react-0118999
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
@@ -19,5 +19,5 @@ Resources:
             Principal: '*'
             Action:
               - s3:GetObject
-            Resource: arn:aws:s3:::${self:custom.bucketName}/*
+            Resource: arn:aws:s3:::psr-proj-react-0118999/*
 

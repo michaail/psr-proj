@@ -1,0 +1,26 @@
+Resources:
+  UserFileBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: psr-user-file-bucket-0118999
+      # Set the CORS policy
+      CorsConfiguration:
+        CorsRules:
+          -
+            AllowedOrigins:
+              - '*'
+            AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+              - HEAD
+            MaxAge: 3000
+
+Outputs:
+  UserFileBucketName:
+    Value:
+      Ref: UserFileBucket
+
