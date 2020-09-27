@@ -1,7 +1,13 @@
 'use strict';
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Credentials': true,
+};
+
 module.exports.hello = async event => {
   return {
+    headers,
     statusCode: 200,
     body: JSON.stringify(
       {
