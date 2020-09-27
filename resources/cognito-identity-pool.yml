@@ -4,7 +4,7 @@ Resources:
     Type: AWS::Cognito::IdentityPool
     Properties:
       # Generate a name based on the stage
-      IdentityPoolName: beta${{self:service}}IdPool
+      IdentityPoolName: beta${self:service}IdPool
       # Allow unathenticated users
       # AllowUnauthenticatedIdentities: true
       AllowUnauthenticatedIdentities: false
@@ -19,6 +19,7 @@ Resources:
   CognitoAuthRole:
     Type: AWS::IAM::Role
     Properties:
+      RoleName: ${self:service.name}_appAuthRole
       Path: /
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
@@ -45,29 +46,29 @@ Resources:
                   - 'cognito-sync:*'
                   - 'cognito-identity:*'
                 Resource: '*'
-
               # Allow users to invoke our API
               - Effect: 'Allow'
                 Action:
                   - 'execute-api:Invoke'
-                Resource:
-                  Fn::Join:
-                    - ''
-                    -
-                      - 'arn:aws:execute-api:'
-                      - Ref: AWS::Region
-                      - ':'
-                      - Ref: AWS::AccountId
-                      - ':'
-                      - Ref: ApiGatewayRestApi
-                      - '/'
-                      - ${self:custom.stage}
-                      - '/*'   # allow any http method (GET/POST/...)
-                      - '/*'   # actually all paths
+                Resource: '*'
+                # Resource:
+                #   Fn::Join:
+                #     - ''
+                #     -
+                #       - 'arn:aws:execute-api:'
+                #       - Ref: AWS::Region
+                #       - ':'
+                #       - Ref: AWS::AccountId
+                #       - ':'
+                #       - Ref: ApiGatewayRestApi
+                #       - '/'
+                #       - ${self:custom.stage}
+                #       - '/*'   # allow any http method (GET/POST/...)
+                #       - '/*'   # actually all paths
               - Effect: 'Allow'
                 Action:
-                  - "s3:*"
-                Resource: "arn:aws:s3:::${{self:custom.FileUploadBucketName}}/private/${cognito-identity.amazonaws.com:sub}/*"
+                  - 's3:*'
+                Resource: 'arn:aws:s3:::${self:custom.FileUploadBucketName}/private/*'
   # IAM role used for unauthenticated users (authenticated users can also invoke unprotected end point)
   CognitoUnauthRole:
     Type: AWS::IAM::Role

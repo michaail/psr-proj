@@ -2,29 +2,21 @@ Resources:
   UserFileBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: ${{self:custom.FileUploadBucketName}}
-      # Set the CORS policy
+      BucketName: ${self:custom.FileUploadBucketName}
       CorsConfiguration:
         CorsRules:
-          -
-            AllowedOrigins:
+          - AllowedHeaders: 
               - '*'
-            AllowedHeaders:
-              - '*'
-            AllowedMethods:
+            AllowedMethods: 
+              - HEAD
               - GET
               - PUT
               - POST
               - DELETE
-              - HEAD
+            AllowedOrigins: 
+              - '*'
             ExposedHeaders:
               - x-amz-server-side-encryption
               - x-amz-request-id
               - x-amz-id-2
             MaxAge: 3000
-
-Outputs:
-  UserFileBucketName:
-    Value:
-      Ref: UserFileBucket
-

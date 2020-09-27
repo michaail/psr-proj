@@ -1,19 +1,25 @@
 service: psrproj
 
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: beta
+  region: eu-west-1
+
 plugins:
-  - aws-amplify-serverless-plugin
+  # - aws-amplify-serverless-plugin
   - serverless-s3-sync
 
 custom:
   stage: beta
-  FileUploadBucketName: psr-user-file-bucket-011899
-  ReactAppBucketName: psr-proj-react-0118999
-  amplify:
-    - filename: src/aws-exports.js
-      type: javascript
-      appClient: CognitoUserPoolClient
+  FileUploadBucketName: psr-user-file-bucket-19950723
+  ReactAppBucketName: psr-proj-react-bucket-19950723
+  # amplify:
+  #   - filename: src/aws-exports.js
+  #     type: javascript
+  #     appClient: CognitoUserPoolClient
   s3Sync:
-    - bucketName: ${{self:custom.ReactAppBucketName}}
+    - bucketName: ${self:custom.ReactAppBucketName}
       localDir: build/
 
 package:
@@ -22,13 +28,6 @@ package:
     - public/**
     - src/**
     - node_modules/**
-
-provider:
-  name: aws
-  runtime: nodejs12.x
-  stage: beta
-  region: eu-west-1
-  variableSyntax: "\\${{([\\s\\S]+?)}}"
 
 functions:
   hello:
@@ -39,9 +38,24 @@ functions:
           method: any
           cors: true
           authorizer: aws_iam
+  # resize:
+  #   handler: handlers/register.register
+  #   events:
+  #     - http:
+  #         path: /{size}/{image}
+  #         method: get
+  #   environment:
+  #     BUCKET: ${self:custom.FileUploadBucketName}
+  #     REGION: ${self:provider.region}
+      # - s3:
+      #     bucket: ${self:custom.FileUploadBucketName}
+      #     event: s3:ObjectCreated:*
+      #     rules:
+      #       - suffix: .jpg
+      #     existing: true
 
 resources:
-  - ${{file(resources/cognito-user-pool.yml)}}
-  - ${{file(resources/cognito-identity-pool.yml)}}
-  - ${{file(resources/s3-bucket-userfile.yml)}}
-  - ${{file(resources/s3-bucket-react.yml)}}
+  - ${file(resources/cognito-user-pool.yml)}
+  - ${file(resources/cognito-identity-pool.yml)}
+  - ${file(resources/s3-bucket-userfile.yml)}
+  - ${file(resources/s3-bucket-react.yml)}

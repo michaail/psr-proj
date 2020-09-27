@@ -2,7 +2,7 @@ Resources:
   CognitoUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
-      UserPoolName: beta-${{self:service}}
+      UserPoolName: beta-${self:service}
       # Set email as an alias
       UsernameAttributes:
         - email
@@ -11,6 +11,6 @@ Resources:
   CognitoUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
-      ClientName: beta-${{self:service}}-userpool-client
+      ClientName: beta-${self:service}-userpool-client
       UserPoolId:
         Ref: CognitoUserPool

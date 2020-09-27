@@ -1,8 +1,10 @@
 import React from 'react';
-import Amplify, {Storage, Auth} from 'aws-amplify';
-import awsconfig from './aws-exports';
-import { withAuthenticator, AmplifySignOut, AmplifyS3ImagePicker } from '@aws-amplify/ui-react';
+import Amplify, {Storage, Auth } from 'aws-amplify';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import config from './config';
+import ImagePicker from './ImagePicker';
+import Gallery from './Gallery';
+
 
 Amplify.configure({
   Auth: {
@@ -29,25 +31,13 @@ Amplify.configure({
 });
 
 const App = () => {
-  const onCHange = async (file) => {
-    const {key} = await Storage.put('example.jpg', file, {
-      contentType: 'image/jpeg'
-    })
-  }
-  
-  
-  
   return(
-  <div>
-    <input 
-      type='file'
-      accept='image/jpeg'
-      onChange={(e) => onCHange(e.target.files[0])}
-    />
-    {/* <AmplifySignOut />
-    My app
-    <AmplifyS3ImagePicker /> */}
-  </div>
+    <div>
+      <AmplifySignOut />
+      <h1>Billy idol</h1>
+      <ImagePicker />
+      <Gallery />
+    </div>
 )}
 
 export default withAuthenticator(App);
