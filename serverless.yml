@@ -34,7 +34,7 @@ custom:
   stage: beta
   FileUploadBucketName: psr-user-file-bucket-19950723
   ReactAppBucketName: psr-proj-react-bucket-19950723
-  tableName: beta-keys
+  tableName: keys-table
   # amplify:
   #   - filename: src/aws-exports.js
   #     type: javascript

@@ -13,11 +13,19 @@ class Gallery extends Component {
   }
 
   componentDidMount = async () => {
+    await this.getKeys();
+  }
+
+  getKeys = async () => {
     const res = await API.get('testApiCall', '/getKeys');
     this.setState({
       list: res,
     });
     console.log(res);
+
+    // await Storage.vault.put(filename, file, {
+    //   contentType: 'image/jpeg'
+    // });
   }
 
   handleCLick = async () => {
@@ -30,7 +38,7 @@ class Gallery extends Component {
     return (
       <div>
         Gallery
-        <Image src={this.state.list} size='small' />
+        
         <Button onClick={() => this.handleCLick()}>Call API</Button>
       </div>
     )

@@ -18,14 +18,15 @@ module.exports.getKeys = async (event, context) => {
   console.log(id);
 
   const params = {
-    TableName: 'beta-keys',
-    Key: {
-      userId: id
+    TableName: 'stage-keys',
+    KeyConditionExpression: 'userId = :key',
+    ExpressionAttributeValues: {
+      ':key': id
     }
-  }
+  };
 
   try {
-    const data = await documentClient.get(params).promise();
+    const data = await documentClient.query(params).promise();
     console.log(data);
     return {
       headers,
@@ -40,7 +41,18 @@ module.exports.getKeys = async (event, context) => {
       ),
     };
   } catch (err) {
-    console.log(err);
+        return {
+      headers,
+      statusCode: 200,
+      body: JSON.stringify(
+        {
+          message: err,
+          input: event,
+        },
+        null,
+        2
+      ),
+    };
   }
 
   // try {

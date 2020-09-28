@@ -15,7 +15,7 @@ module.exports.afterFileUpload = async (event, context) => {
   console.log(s3);
 
   const params = {
-    TableName: 'beta-keys',
+    TableName: 'keys-table',
     Item: {
       userId: id,
       imgKey: s3.object.key,
