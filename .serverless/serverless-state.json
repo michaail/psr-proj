@@ -13,6 +13,38 @@
       "environment": {
         "tableName": "beta-keys"
       },
+      "iamRoleStatements": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:ListBucket"
+          ],
+          "Resource": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:aws:s3:::",
+                {
+                  "Ref": "UserFileBucket"
+                }
+              ]
+            ]
+          }
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "dynamodb:DescribeTable",
+            "dynamodb:Query",
+            "dynamodb:Scan",
+            "dynamodb:GetItem",
+            "dynamodb:PutItem",
+            "dynamodb:UpdateItem",
+            "dynamodb:DeleteItem"
+          ],
+          "Resource": "*"
+        }
+      ],
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
         "AWSTemplateFormatVersion": "2010-09-09",
@@ -146,6 +178,12 @@
                             "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/psrproj-beta*:*:*"
                           }
                         ]
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][0]"
+                      },
+                      {
+                        "$ref": "$[\"service\"][\"provider\"][\"iamRoleStatements\"][1]"
                       }
                     ]
                   }
@@ -174,7 +212,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601289646993-2020-09-28T10:40:46.993Z/psrproj.zip"
+                "S3Key": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z/psrproj.zip"
               },
               "FunctionName": "psrproj-beta-hello",
               "Handler": "handlers/handler.hello",
@@ -197,14 +235,14 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersionSjIQlq2jQmvNqmPC8MZBiABW8AqdZ4vk0gmytfM": {
+          "HelloLambdaVersionqOFFpnodgU3DK0VuvImRiIem1Qi1E0BPT3Wp4C2ZY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "0ZrxWfWb+AqD/AvLufCILkPSq1MvjWglrMpd2lv15sI="
+              "CodeSha256": "yvOr2JMFT9bAxqLVeknbUKV35Kasdxrq+Vxq3WXTtNg="
             }
           },
           "TestLambdaFunction": {
@@ -214,7 +252,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601289646993-2020-09-28T10:40:46.993Z/psrproj.zip"
+                "S3Key": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z/psrproj.zip"
               },
               "FunctionName": "psrproj-beta-test",
               "Handler": "handlers/test.test",
@@ -237,14 +275,14 @@
               "TestLogGroup"
             ]
           },
-          "TestLambdaVersionI8FIL8iTOBpsEjxf3VA8kGMHfQmOJkIC5W960aWcLMM": {
+          "TestLambdaVersioni4YCs6UYfmkWcX8pd62CfJkcjsz5naAu1TEJy4q3yc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "TestLambdaFunction"
               },
-              "CodeSha256": "0ZrxWfWb+AqD/AvLufCILkPSq1MvjWglrMpd2lv15sI="
+              "CodeSha256": "yvOr2JMFT9bAxqLVeknbUKV35Kasdxrq+Vxq3WXTtNg="
             }
           },
           "AfterFileUploadLambdaFunction": {
@@ -254,7 +292,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601289646993-2020-09-28T10:40:46.993Z/psrproj.zip"
+                "S3Key": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z/psrproj.zip"
               },
               "FunctionName": "psrproj-beta-afterFileUpload",
               "Handler": "handlers/afterFileUpload.afterFileUpload",
@@ -277,14 +315,14 @@
               "AfterFileUploadLogGroup"
             ]
           },
-          "AfterFileUploadLambdaVersiongSCBbfRYdW72jYLxJRnIuBv50JUiePgXnaOq3Lfjs": {
+          "AfterFileUploadLambdaVersionuoZYGUEL6fwZCkuUkj9bxVEDkJwn2ZAoAtaikhJgec": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AfterFileUploadLambdaFunction"
               },
-              "CodeSha256": "0ZrxWfWb+AqD/AvLufCILkPSq1MvjWglrMpd2lv15sI="
+              "CodeSha256": "yvOr2JMFT9bAxqLVeknbUKV35Kasdxrq+Vxq3WXTtNg="
             }
           },
           "AfterFileUploadCustomS31": {
@@ -306,11 +344,7 @@
               "BucketConfigs": [
                 {
                   "Event": "s3:ObjectCreated:*",
-                  "Rules": [
-                    {
-                      "Suffix": ".jpg"
-                    }
-                  ]
+                  "Rules": []
                 }
               ]
             }
@@ -411,7 +445,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601289646993-2020-09-28T10:40:46.993Z/custom-resources.zip"
+                "S3Key": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z/custom-resources.zip"
               },
               "FunctionName": "psrproj-beta-custom-resource-existing-s3",
               "Handler": "s3/handler.handler",
@@ -647,7 +681,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1601289601093": {
+          "ApiGatewayDeployment1601301905369": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -1021,6 +1055,31 @@
               ],
               "BillingMode": "PAY_PER_REQUEST"
             }
+          },
+          "TestTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "id",
+                  "KeyType": "HASH"
+                }
+              ],
+              "ProvisionedThroughput": {
+                "ReadCapacityUnits": 1,
+                "WriteCapacityUnits": 1
+              },
+              "StreamSpecification": {
+                "StreamViewType": "NEW_AND_OLD_IMAGES"
+              },
+              "TableName": "test-table"
+            }
           }
         },
         "Outputs": {
@@ -1032,19 +1091,19 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionSjIQlq2jQmvNqmPC8MZBiABW8AqdZ4vk0gmytfM"
+              "Ref": "HelloLambdaVersionqOFFpnodgU3DK0VuvImRiIem1Qi1E0BPT3Wp4C2ZY"
             }
           },
           "TestLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "TestLambdaVersionI8FIL8iTOBpsEjxf3VA8kGMHfQmOJkIC5W960aWcLMM"
+              "Ref": "TestLambdaVersioni4YCs6UYfmkWcX8pd62CfJkcjsz5naAu1TEJy4q3yc"
             }
           },
           "AfterFileUploadLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AfterFileUploadLambdaVersiongSCBbfRYdW72jYLxJRnIuBv50JUiePgXnaOq3Lfjs"
+              "Ref": "AfterFileUploadLambdaVersionuoZYGUEL6fwZCkuUkj9bxVEDkJwn2ZAoAtaikhJgec"
             }
           },
           "ServiceEndpoint": {
@@ -1146,14 +1205,6 @@
       "FileUploadBucketName": "psr-user-file-bucket-19950723",
       "ReactAppBucketName": "psr-proj-react-bucket-19950723",
       "tableName": "beta-keys",
-      "amplify": [
-        {
-          "filename": "src/aws-exports.js",
-          "type": "javascript",
-          "appClient": "CognitoUserPoolClient",
-          "s3Bucket": "psr-user-file-bucket-0118999"
-        }
-      ],
       "s3Sync": [
         {
           "bucketName": "psr-proj-react-bucket-19950723",
@@ -1162,7 +1213,6 @@
       ]
     },
     "plugins": [
-      "aws-amplify-serverless-plugin",
       "serverless-s3-sync"
     ],
     "pluginsData": {},
@@ -1208,7 +1258,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionSjIQlq2jQmvNqmPC8MZBiABW8AqdZ4vk0gmytfM"
+        "versionLogicalId": "HelloLambdaVersionqOFFpnodgU3DK0VuvImRiIem1Qi1E0BPT3Wp4C2ZY"
       },
       "test": {
         "handler": "handlers/test.test",
@@ -1251,7 +1301,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "TestLambdaVersionI8FIL8iTOBpsEjxf3VA8kGMHfQmOJkIC5W960aWcLMM"
+        "versionLogicalId": "TestLambdaVersioni4YCs6UYfmkWcX8pd62CfJkcjsz5naAu1TEJy4q3yc"
       },
       "afterFileUpload": {
         "handler": "handlers/afterFileUpload.afterFileUpload",
@@ -1260,11 +1310,6 @@
             "s3": {
               "bucket": "psr-user-file-bucket-19950723",
               "event": "s3:ObjectCreated:*",
-              "rules": [
-                {
-                  "suffix": ".jpg"
-                }
-              ],
               "existing": true
             }
           }
@@ -1275,7 +1320,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "AfterFileUploadLambdaVersiongSCBbfRYdW72jYLxJRnIuBv50JUiePgXnaOq3Lfjs"
+        "versionLogicalId": "AfterFileUploadLambdaVersionuoZYGUEL6fwZCkuUkj9bxVEDkJwn2ZAoAtaikhJgec"
       }
     },
     "resources": {
@@ -1565,6 +1610,31 @@
             ],
             "BillingMode": "PAY_PER_REQUEST"
           }
+        },
+        "TestTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "id",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "id",
+                "KeyType": "HASH"
+              }
+            ],
+            "ProvisionedThroughput": {
+              "ReadCapacityUnits": 1,
+              "WriteCapacityUnits": 1
+            },
+            "StreamSpecification": {
+              "StreamViewType": "NEW_AND_OLD_IMAGES"
+            },
+            "TableName": "test-table"
+          }
         }
       },
       "Outputs": {}
@@ -1581,7 +1651,39 @@
         "region": "eu-west-1",
         "environment": {
           "tableName": "beta-keys"
-        }
+        },
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "s3:ListBucket"
+            ],
+            "Resource": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:s3:::",
+                  {
+                    "Ref": "UserFileBucket"
+                  }
+                ]
+              ]
+            }
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:DescribeTable",
+              "dynamodb:Query",
+              "dynamodb:Scan",
+              "dynamodb:GetItem",
+              "dynamodb:PutItem",
+              "dynamodb:UpdateItem",
+              "dynamodb:DeleteItem"
+            ],
+            "Resource": "*"
+          }
+        ]
       },
       "plugins": {
         "$ref": "$[\"service\"][\"plugins\"]"
@@ -1594,10 +1696,12 @@
           "amplify/**",
           "public/**",
           "src/**",
-          "node_modules/**"
+          "node_modules/**",
+          "build/**",
+          "public/**"
         ],
         "artifact": "/Users/michalklos/Projects/psr/psr-proj/.serverless/psrproj.zip",
-        "artifactDirectoryName": "serverless/psrproj/beta/1601289646993-2020-09-28T10:40:46.993Z"
+        "artifactDirectoryName": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z"
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
@@ -1906,6 +2010,31 @@
                 ],
                 "BillingMode": "PAY_PER_REQUEST"
               }
+            },
+            "TestTable": {
+              "Type": "AWS::DynamoDB::Table",
+              "Properties": {
+                "AttributeDefinitions": [
+                  {
+                    "AttributeName": "id",
+                    "AttributeType": "S"
+                  }
+                ],
+                "KeySchema": [
+                  {
+                    "AttributeName": "id",
+                    "KeyType": "HASH"
+                  }
+                ],
+                "ProvisionedThroughput": {
+                  "ReadCapacityUnits": 1,
+                  "WriteCapacityUnits": 1
+                },
+                "StreamSpecification": {
+                  "StreamViewType": "NEW_AND_OLD_IMAGES"
+                },
+                "TableName": "test-table"
+              }
             }
           }
         }
@@ -1915,7 +2044,7 @@
     "artifact": "/Users/michalklos/Projects/psr/psr-proj/.serverless/psrproj.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/psrproj/beta/1601289646993-2020-09-28T10:40:46.993Z",
+    "artifactDirectoryName": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z",
     "artifact": "psrproj.zip"
   }
 }

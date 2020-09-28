@@ -7,7 +7,25 @@ provider:
   region: eu-west-1
   environment:
     tableName: ${self:custom.tableName}
-
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 's3:ListBucket'
+      Resource:
+        Fn::Join:
+          - ''
+          - - 'arn:aws:s3:::'
+            - Ref: UserFileBucket
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: '*'
 plugins:
   # - aws-amplify-serverless-plugin
   - serverless-s3-sync
@@ -16,7 +34,7 @@ custom:
   stage: beta
   FileUploadBucketName: psr-user-file-bucket-19950723
   ReactAppBucketName: psr-proj-react-bucket-19950723
-  tableName: ${self:custom.stage}-keys
+  tableName: beta-keys
   # amplify:
   #   - filename: src/aws-exports.js
   #     type: javascript
@@ -32,6 +50,8 @@ package:
     - public/**
     - src/**
     - node_modules/**
+    - build/**
+    - public/**
 
 functions:
   hello:
@@ -56,8 +76,6 @@ functions:
       - s3:
           bucket: ${self:custom.FileUploadBucketName}
           event: s3:ObjectCreated:*
-          rules:
-            - suffix: .jpg
           existing: true
 
 resources:
