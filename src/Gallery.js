@@ -13,7 +13,7 @@ class Gallery extends Component {
   }
 
   componentDidMount = async () => {
-    const res = await API.get('testApiCall', '/getKey');
+    const res = await API.get('testApiCall', '/getKeys');
     this.setState({
       list: res,
     });

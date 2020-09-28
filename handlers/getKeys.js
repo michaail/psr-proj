@@ -11,7 +11,11 @@ module.exports.getKeys = async (event, context) => {
   const ddb = new AWS.DynamoDB({ apiVersion: "2012-10-08"});
   const documentClient = new AWS.DynamoDB.DocumentClient({ region: "eu-west-1"});
 
-  console.log(event);
+  const { identity } = event.requestContext;
+  const id = identity.cognitoIdentityId;
+
+  console.log(identity);
+  console.log(id);
 
   const params = {
     TableName: 'beta-keys',
@@ -20,18 +24,25 @@ module.exports.getKeys = async (event, context) => {
     }
   }
 
-  return {
-    headers,
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Ulabula!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+  try {
+    const data = await documentClient.get(params).promise();
+    console.log(data);
+    return {
+      headers,
+      statusCode: 200,
+      body: JSON.stringify(
+        {
+          message: data,
+          input: event,
+        },
+        null,
+        2
+      ),
+    };
+  } catch (err) {
+    console.log(err);
+  }
+
   // try {
   //   const data = await documentClient.get(params).promise();
   //   console.log(data);
