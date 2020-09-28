@@ -12,12 +12,14 @@ class Gallery extends Component {
     };
   }
 
-  // componentDidMount = async () => {
-  //   const res = await Storage.vault.list('private/');
-  //   this.setState({
-  //     list: res,
-  //   });
-  // }
+  componentDidMount = async () => {
+    const res = await API.get('testApiCall', '/getKey');
+    this.setState({
+      list: res,
+    });
+    console.log(res);
+  }
+
   handleCLick = async () => {
     const d = await API.get('testApiCall', '/t1');
     console.log(d);

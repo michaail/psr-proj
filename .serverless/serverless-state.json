@@ -116,6 +116,12 @@
               "LogGroupName": "/aws/lambda/psrproj-beta-test"
             }
           },
+          "GetLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/psrproj-beta-get"
+            }
+          },
           "AfterFileUploadLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
@@ -212,7 +218,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z/psrproj.zip"
+                "S3Key": "serverless/psrproj/beta/1601311894800-2020-09-28T16:51:34.800Z/psrproj.zip"
               },
               "FunctionName": "psrproj-beta-hello",
               "Handler": "handlers/handler.hello",
@@ -235,14 +241,14 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersionqOFFpnodgU3DK0VuvImRiIem1Qi1E0BPT3Wp4C2ZY": {
+          "HelloLambdaVersionIKGMMOyctXoYoa8TKftE8fdAFZOgUvnz5Y5tklNCQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "yvOr2JMFT9bAxqLVeknbUKV35Kasdxrq+Vxq3WXTtNg="
+              "CodeSha256": "5U0L+raTKncaXQDh7aZcrmKlEYmVXuNJ5WJb5eITVHc="
             }
           },
           "TestLambdaFunction": {
@@ -252,7 +258,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z/psrproj.zip"
+                "S3Key": "serverless/psrproj/beta/1601311894800-2020-09-28T16:51:34.800Z/psrproj.zip"
               },
               "FunctionName": "psrproj-beta-test",
               "Handler": "handlers/test.test",
@@ -275,14 +281,54 @@
               "TestLogGroup"
             ]
           },
-          "TestLambdaVersioni4YCs6UYfmkWcX8pd62CfJkcjsz5naAu1TEJy4q3yc": {
+          "TestLambdaVersiondjgwi7KhKiCkg1Z7ydx0TH7V0E85mN4Hm2eyCD4vnc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "TestLambdaFunction"
               },
-              "CodeSha256": "yvOr2JMFT9bAxqLVeknbUKV35Kasdxrq+Vxq3WXTtNg="
+              "CodeSha256": "5U0L+raTKncaXQDh7aZcrmKlEYmVXuNJ5WJb5eITVHc="
+            }
+          },
+          "GetLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/psrproj/beta/1601311894800-2020-09-28T16:51:34.800Z/psrproj.zip"
+              },
+              "FunctionName": "psrproj-beta-get",
+              "Handler": "handlers/getKeys.getKeys",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs12.x",
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "tableName": "beta-keys"
+                }
+              }
+            },
+            "DependsOn": [
+              "GetLogGroup"
+            ]
+          },
+          "GetLambdaVersion4EIekEUyiilC6DQmFF3VLEK3KQX6ariGs5lSCpHFE": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "GetLambdaFunction"
+              },
+              "CodeSha256": "5U0L+raTKncaXQDh7aZcrmKlEYmVXuNJ5WJb5eITVHc="
             }
           },
           "AfterFileUploadLambdaFunction": {
@@ -292,7 +338,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z/psrproj.zip"
+                "S3Key": "serverless/psrproj/beta/1601311894800-2020-09-28T16:51:34.800Z/psrproj.zip"
               },
               "FunctionName": "psrproj-beta-afterFileUpload",
               "Handler": "handlers/afterFileUpload.afterFileUpload",
@@ -315,14 +361,14 @@
               "AfterFileUploadLogGroup"
             ]
           },
-          "AfterFileUploadLambdaVersionuoZYGUEL6fwZCkuUkj9bxVEDkJwn2ZAoAtaikhJgec": {
+          "AfterFileUploadLambdaVersionfd3Cd2YVWPabHzWZmk0mR7CV3m5pohuQ6dX85uUyUDE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "AfterFileUploadLambdaFunction"
               },
-              "CodeSha256": "yvOr2JMFT9bAxqLVeknbUKV35Kasdxrq+Vxq3WXTtNg="
+              "CodeSha256": "5U0L+raTKncaXQDh7aZcrmKlEYmVXuNJ5WJb5eITVHc="
             }
           },
           "AfterFileUploadCustomS31": {
@@ -445,7 +491,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z/custom-resources.zip"
+                "S3Key": "serverless/psrproj/beta/1601311894800-2020-09-28T16:51:34.800Z/custom-resources.zip"
               },
               "FunctionName": "psrproj-beta-custom-resource-existing-s3",
               "Handler": "s3/handler.handler",
@@ -500,6 +546,21 @@
                 ]
               },
               "PathPart": "t1",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceGetkeys": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Fn::GetAtt": [
+                  "ApiGatewayRestApi",
+                  "RootResourceId"
+                ]
+              },
+              "PathPart": "getKeys",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -595,6 +656,51 @@
               }
             }
           },
+          "ApiGatewayMethodGetkeysOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceGetkeys"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
           "ApiGatewayMethodTestAny": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
@@ -681,7 +787,50 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1601301905369": {
+          "ApiGatewayMethodGetkeysAny": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "ANY",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceGetkeys"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "ApiKeyRequired": false,
+              "AuthorizationType": "AWS_IAM",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "GetLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
+            }
+          },
+          "ApiGatewayDeployment1601311843398": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -692,8 +841,10 @@
             "DependsOn": [
               "ApiGatewayMethodTestOptions",
               "ApiGatewayMethodT1Options",
+              "ApiGatewayMethodGetkeysOptions",
               "ApiGatewayMethodTestAny",
-              "ApiGatewayMethodT1Any"
+              "ApiGatewayMethodT1Any",
+              "ApiGatewayMethodGetkeysAny"
             ]
           },
           "HelloLambdaPermissionApiGateway": {
@@ -739,6 +890,43 @@
               "FunctionName": {
                 "Fn::GetAtt": [
                   "TestLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    "/*/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "GetLambdaPermissionApiGateway": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "GetLambdaFunction",
                   "Arn"
                 ]
               },
@@ -1091,19 +1279,25 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionqOFFpnodgU3DK0VuvImRiIem1Qi1E0BPT3Wp4C2ZY"
+              "Ref": "HelloLambdaVersionIKGMMOyctXoYoa8TKftE8fdAFZOgUvnz5Y5tklNCQ"
             }
           },
           "TestLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "TestLambdaVersioni4YCs6UYfmkWcX8pd62CfJkcjsz5naAu1TEJy4q3yc"
+              "Ref": "TestLambdaVersiondjgwi7KhKiCkg1Z7ydx0TH7V0E85mN4Hm2eyCD4vnc"
+            }
+          },
+          "GetLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "GetLambdaVersion4EIekEUyiilC6DQmFF3VLEK3KQX6ariGs5lSCpHFE"
             }
           },
           "AfterFileUploadLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "AfterFileUploadLambdaVersionuoZYGUEL6fwZCkuUkj9bxVEDkJwn2ZAoAtaikhJgec"
+              "Ref": "AfterFileUploadLambdaVersionfd3Cd2YVWPabHzWZmk0mR7CV3m5pohuQ6dX85uUyUDE"
             }
           },
           "ServiceEndpoint": {
@@ -1258,7 +1452,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionqOFFpnodgU3DK0VuvImRiIem1Qi1E0BPT3Wp4C2ZY"
+        "versionLogicalId": "HelloLambdaVersionIKGMMOyctXoYoa8TKftE8fdAFZOgUvnz5Y5tklNCQ"
       },
       "test": {
         "handler": "handlers/test.test",
@@ -1301,7 +1495,50 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "TestLambdaVersioni4YCs6UYfmkWcX8pd62CfJkcjsz5naAu1TEJy4q3yc"
+        "versionLogicalId": "TestLambdaVersiondjgwi7KhKiCkg1Z7ydx0TH7V0E85mN4Hm2eyCD4vnc"
+      },
+      "get": {
+        "handler": "handlers/getKeys.getKeys",
+        "events": [
+          {
+            "http": {
+              "path": "getKeys",
+              "method": "any",
+              "cors": {
+                "origins": [
+                  "*"
+                ],
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "ANY"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent"
+                ],
+                "allowCredentials": false
+              },
+              "authorizer": {
+                "type": "AWS_IAM",
+                "managedExternally": false,
+                "identitySource": "method.request.header.Authorization"
+              },
+              "integration": "AWS_PROXY"
+            }
+          }
+        ],
+        "name": "psrproj-beta-get",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs12.x",
+        "vpc": {},
+        "versionLogicalId": "GetLambdaVersion4EIekEUyiilC6DQmFF3VLEK3KQX6ariGs5lSCpHFE"
       },
       "afterFileUpload": {
         "handler": "handlers/afterFileUpload.afterFileUpload",
@@ -1320,7 +1557,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "AfterFileUploadLambdaVersionuoZYGUEL6fwZCkuUkj9bxVEDkJwn2ZAoAtaikhJgec"
+        "versionLogicalId": "AfterFileUploadLambdaVersionfd3Cd2YVWPabHzWZmk0mR7CV3m5pohuQ6dX85uUyUDE"
       }
     },
     "resources": {
@@ -1701,7 +1938,7 @@
           "public/**"
         ],
         "artifact": "/Users/michalklos/Projects/psr/psr-proj/.serverless/psrproj.zip",
-        "artifactDirectoryName": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z"
+        "artifactDirectoryName": "serverless/psrproj/beta/1601311894800-2020-09-28T16:51:34.800Z"
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
@@ -2044,7 +2281,7 @@
     "artifact": "/Users/michalklos/Projects/psr/psr-proj/.serverless/psrproj.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/psrproj/beta/1601301955834-2020-09-28T14:05:55.834Z",
+    "artifactDirectoryName": "serverless/psrproj/beta/1601311894800-2020-09-28T16:51:34.800Z",
     "artifact": "psrproj.zip"
   }
 }

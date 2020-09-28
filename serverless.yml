@@ -70,6 +70,14 @@ functions:
           method: any
           cors: true
           authorizer: aws_iam
+  getKeys:
+    handler: handlers/getKeys.getKeys
+    events:
+      - http:
+          path: /getKeys
+          method: any
+          cors: true
+          authorizer: aws_iam
   afterFileUpload:
     handler: handlers/afterFileUpload.afterFileUpload
     events:
