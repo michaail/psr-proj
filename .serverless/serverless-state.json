@@ -10,6 +10,9 @@
       "name": "aws",
       "runtime": "nodejs12.x",
       "region": "eu-west-1",
+      "environment": {
+        "tableName": "beta-keys"
+      },
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
         "AWSTemplateFormatVersion": "2010-09-09",
@@ -79,6 +82,12 @@
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
               "LogGroupName": "/aws/lambda/psrproj-beta-test"
+            }
+          },
+          "AfterFileUploadLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/psrproj-beta-afterFileUpload"
             }
           },
           "IamRoleLambdaExecution": {
@@ -165,7 +174,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601248273086-2020-09-27T23:11:13.086Z/psrproj.zip"
+                "S3Key": "serverless/psrproj/beta/1601279830939-2020-09-28T07:57:10.939Z/psrproj.zip"
               },
               "FunctionName": "psrproj-beta-hello",
               "Handler": "handlers/handler.hello",
@@ -177,20 +186,25 @@
                 ]
               },
               "Runtime": "nodejs12.x",
-              "Timeout": 6
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "tableName": "beta-keys"
+                }
+              }
             },
             "DependsOn": [
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersionikHA6jGwXWSQCgqNKWAhf7HqCGfY6UoVuFDZc19lk": {
+          "HelloLambdaVersionwVY3xIxdFGmpbxEqYYBElRj4ZYI6OjmyQPjhU86jkLo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "O1KIbYszYMJ7odbPGrkTuNVMnf0jT1r2C2ySIhAxjIo="
+              "CodeSha256": "zsRVk7OhD/81VzPwvaCZVl4y8S5ycm0M+0BWP068Kbw="
             }
           },
           "TestLambdaFunction": {
@@ -200,7 +214,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/psrproj/beta/1601248273086-2020-09-27T23:11:13.086Z/psrproj.zip"
+                "S3Key": "serverless/psrproj/beta/1601279830939-2020-09-28T07:57:10.939Z/psrproj.zip"
               },
               "FunctionName": "psrproj-beta-test",
               "Handler": "handlers/test.test",
@@ -212,21 +226,208 @@
                 ]
               },
               "Runtime": "nodejs12.x",
-              "Timeout": 6
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "tableName": "beta-keys"
+                }
+              }
             },
             "DependsOn": [
               "TestLogGroup"
             ]
           },
-          "TestLambdaVersionJ1kusn5IUhWKOaj1DjbALuJhEv62tXP0wxyBhDPxIrg": {
+          "TestLambdaVersionKPbr57XAbvA0Pcb29Owr5PRobU8gPuZfIrZKAzo": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "TestLambdaFunction"
               },
-              "CodeSha256": "O1KIbYszYMJ7odbPGrkTuNVMnf0jT1r2C2ySIhAxjIo="
+              "CodeSha256": "zsRVk7OhD/81VzPwvaCZVl4y8S5ycm0M+0BWP068Kbw="
             }
+          },
+          "AfterFileUploadLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/psrproj/beta/1601279830939-2020-09-28T07:57:10.939Z/psrproj.zip"
+              },
+              "FunctionName": "psrproj-beta-afterFileUpload",
+              "Handler": "handlers/afterFileUpload.afterFileUpload",
+              "MemorySize": 1024,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              },
+              "Runtime": "nodejs12.x",
+              "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "tableName": "beta-keys"
+                }
+              }
+            },
+            "DependsOn": [
+              "AfterFileUploadLogGroup"
+            ]
+          },
+          "AfterFileUploadLambdaVersioneVTPIbDN2XpJTadNcteEDHE29zMHrVKuJn8HsxQozO4": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "AfterFileUploadLambdaFunction"
+              },
+              "CodeSha256": "zsRVk7OhD/81VzPwvaCZVl4y8S5ycm0M+0BWP068Kbw="
+            }
+          },
+          "AfterFileUploadCustomS31": {
+            "Type": "Custom::S3",
+            "Version": 1,
+            "DependsOn": [
+              "AfterFileUploadLambdaFunction",
+              "CustomDashresourceDashexistingDashs3LambdaFunction"
+            ],
+            "Properties": {
+              "ServiceToken": {
+                "Fn::GetAtt": [
+                  "CustomDashresourceDashexistingDashs3LambdaFunction",
+                  "Arn"
+                ]
+              },
+              "FunctionName": "psrproj-beta-afterFileUpload",
+              "BucketName": "psr-user-file-bucket-19950723",
+              "BucketConfigs": [
+                {
+                  "Event": "s3:ObjectCreated:*",
+                  "Rules": [
+                    {
+                      "Suffix": ".jpg"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "IamRoleCustomResourcesLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "beta",
+                        "psrproj",
+                        "custom-resources-lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Resource": {
+                          "Fn::Join": [
+                            ":",
+                            [
+                              "arn",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              "s3",
+                              "",
+                              "",
+                              "psr-user-file-bucket-19950723"
+                            ]
+                          ]
+                        },
+                        "Action": [
+                          "s3:PutBucketNotification",
+                          "s3:GetBucketNotification"
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Resource": {
+                          "Fn::Join": [
+                            ":",
+                            [
+                              "arn",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              "lambda",
+                              {
+                                "Ref": "AWS::Region"
+                              },
+                              {
+                                "Ref": "AWS::AccountId"
+                              },
+                              "function",
+                              "psrproj-beta-afterFileUpload"
+                            ]
+                          ]
+                        },
+                        "Action": [
+                          "lambda:AddPermission",
+                          "lambda:RemovePermission"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "CustomDashresourceDashexistingDashs3LambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/psrproj/beta/1601279830939-2020-09-28T07:57:10.939Z/custom-resources.zip"
+              },
+              "FunctionName": "psrproj-beta-custom-resource-existing-s3",
+              "Handler": "s3/handler.handler",
+              "MemorySize": 1024,
+              "Runtime": "nodejs12.x",
+              "Timeout": 180,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleCustomResourcesLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "IamRoleCustomResourcesLambdaExecution"
+            ]
           },
           "ApiGatewayRestApi": {
             "Type": "AWS::ApiGateway::RestApi",
@@ -446,7 +647,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1601248217567": {
+          "ApiGatewayDeployment1601279778839": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -633,6 +834,26 @@
                           "s3:*"
                         ],
                         "Resource": "arn:aws:s3:::psr-user-file-bucket-19950723/private/*"
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "dynamodb:DescribeTable",
+                          "dynamodb:Query",
+                          "dynamodb:Scan",
+                          "dynamodb:GetItem",
+                          "dynamodb:PutItem",
+                          "dynamodb:UpdateItem",
+                          "dynamodb:DeleteItem"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::GetAtt": [
+                              "KeysTable",
+                              "Arn"
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }
@@ -773,6 +994,33 @@
                 ]
               }
             }
+          },
+          "KeysTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "beta-keys",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "userId",
+                  "AttributeType": "S"
+                },
+                {
+                  "AttributeName": "imgKey",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "userId",
+                  "KeyType": "HASH"
+                },
+                {
+                  "AttributeName": "imgKey",
+                  "KeyType": "RANGE"
+                }
+              ],
+              "BillingMode": "PAY_PER_REQUEST"
+            }
           }
         },
         "Outputs": {
@@ -784,13 +1032,19 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionikHA6jGwXWSQCgqNKWAhf7HqCGfY6UoVuFDZc19lk"
+              "Ref": "HelloLambdaVersionwVY3xIxdFGmpbxEqYYBElRj4ZYI6OjmyQPjhU86jkLo"
             }
           },
           "TestLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "TestLambdaVersionJ1kusn5IUhWKOaj1DjbALuJhEv62tXP0wxyBhDPxIrg"
+              "Ref": "TestLambdaVersionKPbr57XAbvA0Pcb29Owr5PRobU8gPuZfIrZKAzo"
+            }
+          },
+          "AfterFileUploadLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "AfterFileUploadLambdaVersioneVTPIbDN2XpJTadNcteEDHE29zMHrVKuJn8HsxQozO4"
             }
           },
           "ServiceEndpoint": {
@@ -891,6 +1145,7 @@
       "stage": "beta",
       "FileUploadBucketName": "psr-user-file-bucket-19950723",
       "ReactAppBucketName": "psr-proj-react-bucket-19950723",
+      "tableName": "beta-keys",
       "s3Sync": [
         {
           "bucketName": "psr-proj-react-bucket-19950723",
@@ -944,7 +1199,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionikHA6jGwXWSQCgqNKWAhf7HqCGfY6UoVuFDZc19lk"
+        "versionLogicalId": "HelloLambdaVersionwVY3xIxdFGmpbxEqYYBElRj4ZYI6OjmyQPjhU86jkLo"
       },
       "test": {
         "handler": "handlers/test.test",
@@ -987,7 +1242,31 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "TestLambdaVersionJ1kusn5IUhWKOaj1DjbALuJhEv62tXP0wxyBhDPxIrg"
+        "versionLogicalId": "TestLambdaVersionKPbr57XAbvA0Pcb29Owr5PRobU8gPuZfIrZKAzo"
+      },
+      "afterFileUpload": {
+        "handler": "handlers/afterFileUpload.afterFileUpload",
+        "events": [
+          {
+            "s3": {
+              "bucket": "psr-user-file-bucket-19950723",
+              "event": "s3:ObjectCreated:*",
+              "rules": [
+                {
+                  "suffix": ".jpg"
+                }
+              ],
+              "existing": true
+            }
+          }
+        ],
+        "name": "psrproj-beta-afterFileUpload",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs12.x",
+        "vpc": {},
+        "versionLogicalId": "AfterFileUploadLambdaVersioneVTPIbDN2XpJTadNcteEDHE29zMHrVKuJn8HsxQozO4"
       }
     },
     "resources": {
@@ -1090,6 +1369,26 @@
                         "s3:*"
                       ],
                       "Resource": "arn:aws:s3:::psr-user-file-bucket-19950723/private/*"
+                    },
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "dynamodb:DescribeTable",
+                        "dynamodb:Query",
+                        "dynamodb:Scan",
+                        "dynamodb:GetItem",
+                        "dynamodb:PutItem",
+                        "dynamodb:UpdateItem",
+                        "dynamodb:DeleteItem"
+                      ],
+                      "Resource": [
+                        {
+                          "Fn::GetAtt": [
+                            "KeysTable",
+                            "Arn"
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }
@@ -1230,6 +1529,33 @@
               ]
             }
           }
+        },
+        "KeysTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "Properties": {
+            "TableName": "beta-keys",
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "userId",
+                "AttributeType": "S"
+              },
+              {
+                "AttributeName": "imgKey",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "userId",
+                "KeyType": "HASH"
+              },
+              {
+                "AttributeName": "imgKey",
+                "KeyType": "RANGE"
+              }
+            ],
+            "BillingMode": "PAY_PER_REQUEST"
+          }
         }
       },
       "Outputs": {}
@@ -1243,7 +1569,10 @@
         "name": "aws",
         "runtime": "nodejs12.x",
         "stage": "beta",
-        "region": "eu-west-1"
+        "region": "eu-west-1",
+        "environment": {
+          "tableName": "beta-keys"
+        }
       },
       "plugins": {
         "$ref": "$[\"service\"][\"plugins\"]"
@@ -1259,7 +1588,7 @@
           "node_modules/**"
         ],
         "artifact": "/Users/michalklos/Projects/psr/psr-proj/.serverless/psrproj.zip",
-        "artifactDirectoryName": "serverless/psrproj/beta/1601248273086-2020-09-27T23:11:13.086Z"
+        "artifactDirectoryName": "serverless/psrproj/beta/1601279830939-2020-09-28T07:57:10.939Z"
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
@@ -1369,6 +1698,26 @@
                             "s3:*"
                           ],
                           "Resource": "arn:aws:s3:::psr-user-file-bucket-19950723/private/*"
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "dynamodb:DescribeTable",
+                            "dynamodb:Query",
+                            "dynamodb:Scan",
+                            "dynamodb:GetItem",
+                            "dynamodb:PutItem",
+                            "dynamodb:UpdateItem",
+                            "dynamodb:DeleteItem"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::GetAtt": [
+                                "KeysTable",
+                                "Arn"
+                              ]
+                            }
+                          ]
                         }
                       ]
                     }
@@ -1519,6 +1868,37 @@
               }
             }
           }
+        },
+        {
+          "Resources": {
+            "KeysTable": {
+              "Type": "AWS::DynamoDB::Table",
+              "Properties": {
+                "TableName": "beta-keys",
+                "AttributeDefinitions": [
+                  {
+                    "AttributeName": "userId",
+                    "AttributeType": "S"
+                  },
+                  {
+                    "AttributeName": "imgKey",
+                    "AttributeType": "S"
+                  }
+                ],
+                "KeySchema": [
+                  {
+                    "AttributeName": "userId",
+                    "KeyType": "HASH"
+                  },
+                  {
+                    "AttributeName": "imgKey",
+                    "KeyType": "RANGE"
+                  }
+                ],
+                "BillingMode": "PAY_PER_REQUEST"
+              }
+            }
+          }
         }
       ]
     },
@@ -1526,7 +1906,7 @@
     "artifact": "/Users/michalklos/Projects/psr/psr-proj/.serverless/psrproj.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/psrproj/beta/1601248273086-2020-09-27T23:11:13.086Z",
+    "artifactDirectoryName": "serverless/psrproj/beta/1601279830939-2020-09-28T07:57:10.939Z",
     "artifact": "psrproj.zip"
   }
 }

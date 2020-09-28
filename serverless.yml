@@ -5,6 +5,8 @@ provider:
   runtime: nodejs12.x
   stage: beta
   region: eu-west-1
+  environment:
+    tableName: ${self:custom.tableName}
 
 plugins:
   # - aws-amplify-serverless-plugin
@@ -22,9 +24,6 @@ custom:
   s3Sync:
     - bucketName: ${self:custom.ReactAppBucketName}
       localDir: build/
-
-environment:
-  tableName: ${self:custom.tableName}
 
 package:
   exclude:
@@ -50,6 +49,17 @@ functions:
           method: any
           cors: true
           authorizer: aws_iam
+  afterFileUpload:
+    handler: handlers/afterFileUpload.afterFileUpload
+    events:
+      - s3:
+          bucket: ${self:custom.FileUploadBucketName}
+          event: s3:ObjectCreated:*
+          rules:
+            - suffix: .jpg
+          existing: true
+    # environment:
+    #   REGION: ${self:provider.region}
   # resize:
   #   handler: handlers/register.register
   #   events:
