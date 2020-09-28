@@ -14,6 +14,7 @@ custom:
   stage: beta
   FileUploadBucketName: psr-user-file-bucket-19950723
   ReactAppBucketName: psr-proj-react-bucket-19950723
+  tableName: ${self:custom.stage}-keys
   # amplify:
   #   - filename: src/aws-exports.js
   #     type: javascript
@@ -21,6 +22,9 @@ custom:
   s3Sync:
     - bucketName: ${self:custom.ReactAppBucketName}
       localDir: build/
+
+environment:
+  tableName: ${self:custom.tableName}
 
 package:
   exclude:
@@ -35,6 +39,14 @@ functions:
     events:
       - http:
           path: /test
+          method: any
+          cors: true
+          authorizer: aws_iam
+  test:
+    handler: handlers/test.test
+    events:
+      - http:
+          path: /t1
           method: any
           cors: true
           authorizer: aws_iam
@@ -59,3 +71,4 @@ resources:
   - ${file(resources/cognito-identity-pool.yml)}
   - ${file(resources/s3-bucket-userfile.yml)}
   - ${file(resources/s3-bucket-react.yml)}
+  - ${file(resources/dynamodb.yml)}

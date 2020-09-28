@@ -62,10 +62,10 @@
         "LogGroupName": "/aws/lambda/psrproj-beta-hello"
       }
     },
-    "ResizeLogGroup": {
+    "TestLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/psrproj-beta-resize"
+        "LogGroupName": "/aws/lambda/psrproj-beta-test"
       }
     },
     "IamRoleLambdaExecution": {
@@ -152,7 +152,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/psrproj/beta/1601243504213-2020-09-27T21:51:44.213Z/psrproj.zip"
+          "S3Key": "serverless/psrproj/beta/1601248273086-2020-09-27T23:11:13.086Z/psrproj.zip"
         },
         "FunctionName": "psrproj-beta-hello",
         "Handler": "handlers/handler.hello",
@@ -170,27 +170,27 @@
         "HelloLogGroup"
       ]
     },
-    "HelloLambdaVersionMhBLwSEnkQyMumD6ImiF803oqs6Lvzf9RyUuKNcR4rc": {
+    "HelloLambdaVersionikHA6jGwXWSQCgqNKWAhf7HqCGfY6UoVuFDZc19lk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "cLcMiRLYDviTnrIFA3UwYtp41+2ifL4aeunA6NuKWYQ="
+        "CodeSha256": "O1KIbYszYMJ7odbPGrkTuNVMnf0jT1r2C2ySIhAxjIo="
       }
     },
-    "ResizeLambdaFunction": {
+    "TestLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/psrproj/beta/1601243504213-2020-09-27T21:51:44.213Z/psrproj.zip"
+          "S3Key": "serverless/psrproj/beta/1601248273086-2020-09-27T23:11:13.086Z/psrproj.zip"
         },
-        "FunctionName": "psrproj-beta-resize",
-        "Handler": "handlers/register.register",
+        "FunctionName": "psrproj-beta-test",
+        "Handler": "handlers/test.test",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -199,26 +199,20 @@
           ]
         },
         "Runtime": "nodejs12.x",
-        "Timeout": 6,
-        "Environment": {
-          "Variables": {
-            "BUCKET": "psr-user-file-bucket-19950723",
-            "REGION": "eu-west-1"
-          }
-        }
+        "Timeout": 6
       },
       "DependsOn": [
-        "ResizeLogGroup"
+        "TestLogGroup"
       ]
     },
-    "ResizeLambdaVersion3fmndeORzl8YjE7HvRUzTDEMMPuR0nMiM8DTirPlM": {
+    "TestLambdaVersionJ1kusn5IUhWKOaj1DjbALuJhEv62tXP0wxyBhDPxIrg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "ResizeLambdaFunction"
+          "Ref": "TestLambdaFunction"
         },
-        "CodeSha256": "cLcMiRLYDviTnrIFA3UwYtp41+2ifL4aeunA6NuKWYQ="
+        "CodeSha256": "O1KIbYszYMJ7odbPGrkTuNVMnf0jT1r2C2ySIhAxjIo="
       }
     },
     "ApiGatewayRestApi": {
@@ -248,7 +242,7 @@
         }
       }
     },
-    "ApiGatewayResourceSizeVar": {
+    "ApiGatewayResourceT1": {
       "Type": "AWS::ApiGateway::Resource",
       "Properties": {
         "ParentId": {
@@ -257,19 +251,7 @@
             "RootResourceId"
           ]
         },
-        "PathPart": "{size}",
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
-    "ApiGatewayResourceSizeVarImageVar": {
-      "Type": "AWS::ApiGateway::Resource",
-      "Properties": {
-        "ParentId": {
-          "Ref": "ApiGatewayResourceSizeVar"
-        },
-        "PathPart": "{image}",
+        "PathPart": "t1",
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         }
@@ -320,6 +302,51 @@
         }
       }
     },
+    "ApiGatewayMethodT1Options": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "OPTIONS",
+        "MethodResponses": [
+          {
+            "StatusCode": "200",
+            "ResponseParameters": {
+              "method.response.header.Access-Control-Allow-Origin": true,
+              "method.response.header.Access-Control-Allow-Headers": true,
+              "method.response.header.Access-Control-Allow-Methods": true
+            },
+            "ResponseModels": {}
+          }
+        ],
+        "RequestParameters": {},
+        "Integration": {
+          "Type": "MOCK",
+          "RequestTemplates": {
+            "application/json": "{statusCode:200}"
+          },
+          "ContentHandling": "CONVERT_TO_TEXT",
+          "IntegrationResponses": [
+            {
+              "StatusCode": "200",
+              "ResponseParameters": {
+                "method.response.header.Access-Control-Allow-Origin": "'*'",
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
+                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+              },
+              "ResponseTemplates": {
+                "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
+              }
+            }
+          ]
+        },
+        "ResourceId": {
+          "Ref": "ApiGatewayResourceT1"
+        },
+        "RestApiId": {
+          "Ref": "ApiGatewayRestApi"
+        }
+      }
+    },
     "ApiGatewayMethodTestAny": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
@@ -363,19 +390,19 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayMethodSizeVarImageVarGet": {
+    "ApiGatewayMethodT1Any": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
-        "HttpMethod": "GET",
+        "HttpMethod": "ANY",
         "RequestParameters": {},
         "ResourceId": {
-          "Ref": "ApiGatewayResourceSizeVarImageVar"
+          "Ref": "ApiGatewayResourceT1"
         },
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
         "ApiKeyRequired": false,
-        "AuthorizationType": "NONE",
+        "AuthorizationType": "AWS_IAM",
         "Integration": {
           "IntegrationHttpMethod": "POST",
           "Type": "AWS_PROXY",
@@ -394,7 +421,7 @@
                 ":lambda:path/2015-03-31/functions/",
                 {
                   "Fn::GetAtt": [
-                    "ResizeLambdaFunction",
+                    "TestLambdaFunction",
                     "Arn"
                   ]
                 },
@@ -406,7 +433,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1601243448639": {
+    "ApiGatewayDeployment1601248217567": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -416,8 +443,9 @@
       },
       "DependsOn": [
         "ApiGatewayMethodTestOptions",
+        "ApiGatewayMethodT1Options",
         "ApiGatewayMethodTestAny",
-        "ApiGatewayMethodSizeVarImageVarGet"
+        "ApiGatewayMethodT1Any"
       ]
     },
     "HelloLambdaPermissionApiGateway": {
@@ -457,12 +485,12 @@
         }
       }
     },
-    "ResizeLambdaPermissionApiGateway": {
+    "TestLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "ResizeLambdaFunction",
+            "TestLambdaFunction",
             "Arn"
           ]
         },
@@ -743,13 +771,13 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionMhBLwSEnkQyMumD6ImiF803oqs6Lvzf9RyUuKNcR4rc"
+        "Ref": "HelloLambdaVersionikHA6jGwXWSQCgqNKWAhf7HqCGfY6UoVuFDZc19lk"
       }
     },
-    "ResizeLambdaFunctionQualifiedArn": {
+    "TestLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ResizeLambdaVersion3fmndeORzl8YjE7HvRUzTDEMMPuR0nMiM8DTirPlM"
+        "Ref": "TestLambdaVersionJ1kusn5IUhWKOaj1DjbALuJhEv62tXP0wxyBhDPxIrg"
       }
     },
     "ServiceEndpoint": {

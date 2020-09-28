@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Card, Button, Image} from 'semantic-ui-react';
-import {Storage} from 'aws-amplify';
+import {Storage, API} from 'aws-amplify';
 
 Storage.configure({level: 'private'});
 
@@ -13,11 +13,15 @@ class Gallery extends Component {
   }
 
   // componentDidMount = async () => {
-  //   const res = await Storage.list('/');
+  //   const res = await Storage.vault.list('private/');
   //   this.setState({
   //     list: res,
   //   });
   // }
+  handleCLick = async () => {
+    const d = await API.get('testApiCall', '/t1');
+    console.log(d);
+  }
 
   render() {
 
@@ -25,6 +29,7 @@ class Gallery extends Component {
       <div>
         Gallery
         <Image src={this.state.list} size='small' />
+        <Button onClick={() => this.handleCLick()}>Call API</Button>
       </div>
     )
   }

@@ -1,14 +1,17 @@
 Resources:
-  usersTable:
+  KeysTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: usersTable
+      TableName: ${self:custom.tableName}
       AttributeDefinitions:
-        - AttributeName: email
+        - AttributeName: userId
+          AttributeType: S
+        - AttributeName: imgKey
           AttributeType: S
       KeySchema:
-        - AttributeName: email
+        - AttributeName: userId
           KeyType: HASH
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
+        - AttributeName: imgKey
+          KeyType: RANGE
+      # Set the capacity to auto-scale
+      BillingMode: PAY_PER_REQUEST

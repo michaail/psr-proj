@@ -69,6 +69,17 @@ Resources:
                 Action:
                   - 's3:*'
                 Resource: 'arn:aws:s3:::${self:custom.FileUploadBucketName}/private/*'
+              - Effect: 'Allow'
+                Action:
+                  - dynamodb:DescribeTable
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                Resource:
+                  - "Fn::GetAtt": [ KeysTable, Arn ]
   # IAM role used for unauthenticated users (authenticated users can also invoke unprotected end point)
   CognitoUnauthRole:
     Type: AWS::IAM::Role
