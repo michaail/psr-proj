@@ -18,7 +18,7 @@ module.exports.getKeys = async (event, context) => {
   console.log(id);
 
   const params = {
-    TableName: 'stage-keys',
+    TableName: 'keys-table',
     KeyConditionExpression: 'userId = :key',
     ExpressionAttributeValues: {
       ':key': id

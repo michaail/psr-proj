@@ -13,6 +13,8 @@ class Gallery extends Component {
   }
 
   componentDidMount = async () => {
+    const t = Storage.list('/')
+
     await this.getKeys();
   }
 
