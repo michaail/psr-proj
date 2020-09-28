@@ -21,6 +21,7 @@ custom:
   #   - filename: src/aws-exports.js
   #     type: javascript
   #     appClient: CognitoUserPoolClient
+  #     s3Bucket: psr-user-file-bucket-0118999
   s3Sync:
     - bucketName: ${self:custom.ReactAppBucketName}
       localDir: build/
@@ -58,23 +59,6 @@ functions:
           rules:
             - suffix: .jpg
           existing: true
-    # environment:
-    #   REGION: ${self:provider.region}
-  # resize:
-  #   handler: handlers/register.register
-  #   events:
-  #     - http:
-  #         path: /{size}/{image}
-  #         method: get
-  #   environment:
-  #     BUCKET: ${self:custom.FileUploadBucketName}
-  #     REGION: ${self:provider.region}
-      # - s3:
-      #     bucket: ${self:custom.FileUploadBucketName}
-      #     event: s3:ObjectCreated:*
-      #     rules:
-      #       - suffix: .jpg
-      #     existing: true
 
 resources:
   - ${file(resources/cognito-user-pool.yml)}

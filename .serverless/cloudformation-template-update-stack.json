@@ -158,7 +158,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/psrproj/beta/1601279830939-2020-09-28T07:57:10.939Z/psrproj.zip"
+          "S3Key": "serverless/psrproj/beta/1601289646993-2020-09-28T10:40:46.993Z/psrproj.zip"
         },
         "FunctionName": "psrproj-beta-hello",
         "Handler": "handlers/handler.hello",
@@ -181,14 +181,14 @@
         "HelloLogGroup"
       ]
     },
-    "HelloLambdaVersionwVY3xIxdFGmpbxEqYYBElRj4ZYI6OjmyQPjhU86jkLo": {
+    "HelloLambdaVersionSjIQlq2jQmvNqmPC8MZBiABW8AqdZ4vk0gmytfM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "zsRVk7OhD/81VzPwvaCZVl4y8S5ycm0M+0BWP068Kbw="
+        "CodeSha256": "0ZrxWfWb+AqD/AvLufCILkPSq1MvjWglrMpd2lv15sI="
       }
     },
     "TestLambdaFunction": {
@@ -198,7 +198,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/psrproj/beta/1601279830939-2020-09-28T07:57:10.939Z/psrproj.zip"
+          "S3Key": "serverless/psrproj/beta/1601289646993-2020-09-28T10:40:46.993Z/psrproj.zip"
         },
         "FunctionName": "psrproj-beta-test",
         "Handler": "handlers/test.test",
@@ -221,14 +221,14 @@
         "TestLogGroup"
       ]
     },
-    "TestLambdaVersionKPbr57XAbvA0Pcb29Owr5PRobU8gPuZfIrZKAzo": {
+    "TestLambdaVersionI8FIL8iTOBpsEjxf3VA8kGMHfQmOJkIC5W960aWcLMM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "TestLambdaFunction"
         },
-        "CodeSha256": "zsRVk7OhD/81VzPwvaCZVl4y8S5ycm0M+0BWP068Kbw="
+        "CodeSha256": "0ZrxWfWb+AqD/AvLufCILkPSq1MvjWglrMpd2lv15sI="
       }
     },
     "AfterFileUploadLambdaFunction": {
@@ -238,7 +238,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/psrproj/beta/1601279830939-2020-09-28T07:57:10.939Z/psrproj.zip"
+          "S3Key": "serverless/psrproj/beta/1601289646993-2020-09-28T10:40:46.993Z/psrproj.zip"
         },
         "FunctionName": "psrproj-beta-afterFileUpload",
         "Handler": "handlers/afterFileUpload.afterFileUpload",
@@ -261,14 +261,14 @@
         "AfterFileUploadLogGroup"
       ]
     },
-    "AfterFileUploadLambdaVersioneVTPIbDN2XpJTadNcteEDHE29zMHrVKuJn8HsxQozO4": {
+    "AfterFileUploadLambdaVersiongSCBbfRYdW72jYLxJRnIuBv50JUiePgXnaOq3Lfjs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AfterFileUploadLambdaFunction"
         },
-        "CodeSha256": "zsRVk7OhD/81VzPwvaCZVl4y8S5ycm0M+0BWP068Kbw="
+        "CodeSha256": "0ZrxWfWb+AqD/AvLufCILkPSq1MvjWglrMpd2lv15sI="
       }
     },
     "AfterFileUploadCustomS31": {
@@ -395,7 +395,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/psrproj/beta/1601279830939-2020-09-28T07:57:10.939Z/custom-resources.zip"
+          "S3Key": "serverless/psrproj/beta/1601289646993-2020-09-28T10:40:46.993Z/custom-resources.zip"
         },
         "FunctionName": "psrproj-beta-custom-resource-existing-s3",
         "Handler": "s3/handler.handler",
@@ -631,7 +631,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1601279778839": {
+    "ApiGatewayDeployment1601289601093": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -1016,19 +1016,19 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersionwVY3xIxdFGmpbxEqYYBElRj4ZYI6OjmyQPjhU86jkLo"
+        "Ref": "HelloLambdaVersionSjIQlq2jQmvNqmPC8MZBiABW8AqdZ4vk0gmytfM"
       }
     },
     "TestLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "TestLambdaVersionKPbr57XAbvA0Pcb29Owr5PRobU8gPuZfIrZKAzo"
+        "Ref": "TestLambdaVersionI8FIL8iTOBpsEjxf3VA8kGMHfQmOJkIC5W960aWcLMM"
       }
     },
     "AfterFileUploadLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AfterFileUploadLambdaVersioneVTPIbDN2XpJTadNcteEDHE29zMHrVKuJn8HsxQozO4"
+        "Ref": "AfterFileUploadLambdaVersiongSCBbfRYdW72jYLxJRnIuBv50JUiePgXnaOq3Lfjs"
       }
     },
     "ServiceEndpoint": {
